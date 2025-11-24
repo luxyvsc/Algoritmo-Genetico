@@ -1,0 +1,6 @@
+# Ignorar arquivos gerados automaticamente
+results/*
+data/*
+.venv/
+!data/.gitkeep
+!results/.gitkeep
