@@ -3,6 +3,30 @@
 
 > Projeto de otimização de seleção de áreas agrícolas usando Algoritmo Genético (GA) com múltiplos fatores e restrições realistas do agro.
 
+## Descrição do Projeto
+Este repositório implementa um pipeline completo para simular e otimizar a seleção de áreas agrícolas sob múltiplas restrições de recursos (orçamento, água, fertilizante) e fatores de risco, incorporando aspectos de rentabilidade e sustentabilidade. Os dados são gerados de forma sintética mas realista, permitindo reprodutibilidade por `seed`. O Algoritmo Genético aqui não busca apenas maximizar lucro: ele equilibra retorno econômico, risco operacional e uso eficiente de insumos, penalizando automaticamente soluções inviáveis. Inclui geração de dados, execução de experimentos parametrizados via JSON e análise detalhada (estatísticas, rankings, penalidades e gráficos de convergência).
+
+Principais destaques:
+- Fitness multifatorial (lucro, custo, risco, penalidades de recursos)
+- Múltiplos constraints realistas (água, fertilizante, orçamento)
+- Configurações de experimento em arquivos JSON para fácil reprodução
+- Geração de dados sintéticos realistas com controle de `seed`
+- Análise automatizada com métricas, rankings e visualizações
+- Estrutura extensível para novos operadores de GA ou novas métricas
+
+## Project Overview (English)
+This repository delivers an end‑to‑end genetic algorithm workflow to optimize the selection of agricultural plots under realistic multi‑resource constraints (budget, water, fertilizer) while accounting for risk and profitability. Synthetic but plausible data is generated reproducibly using seeds. The GA does more than chase raw profit: it balances economic return, operational risk and sustainable resource consumption, automatically penalizing infeasible solutions. The stack covers data generation, experiment execution via JSON configuration, and a rich analysis script providing statistics, rankings, penalties and convergence charts.
+
+Key Features:
+- Multi-factor fitness (revenue, cost, risk, constraint penalties)
+- Realistic constraints (water, fertilizer, budget)
+- JSON-driven experiment configuration & reproducibility (seeded runs)
+- Synthetic realistic dataset generation
+- Automated result analysis: metrics, rankings, convergence plots
+- Easily extensible for new GA operators or domain factors
+
+---
+
 ---
 
 ## Objetivo
