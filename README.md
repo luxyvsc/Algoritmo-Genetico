@@ -38,7 +38,6 @@ farmtech-ir-alem/
 ├─ data/           # Dados simulados das áreas agrícolas
 ├─ src/            # Código fonte do GA e utilitários
 ├─ configs/        # Configurações de experimentos
-├─ notebooks/      # Jupyter Notebooks para análise (opcional)
 ├─ figures/        # Gráficos e diagramas
 ├─ results/        # Resultados dos experimentos
 ├─ requirements.txt
@@ -144,5 +143,3 @@ O melhor fitness representa a qualidade da melhor solução encontrada pelo GA, 
 - Resultados de batch são exportados em CSV para facilitar análise e comparação.
 - O script `analyze_ga.py` apresenta todas as análises relevantes, com explicações e unidades.
 
-## Vídeo demonstrativo
-## TODO: fazer o vídeo demonstrando como funciona
