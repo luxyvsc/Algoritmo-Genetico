@@ -32,6 +32,14 @@ Key Features:
 ## Objetivo
 Selecionar o melhor conjunto de áreas de plantio para maximizar o lucro, respeitando limites de orçamento, água e fertilizante, considerando risco, tipo de solo e cultura.
 
+## Experimento (Baseline)
+O experimento baseline (`configs/baseline.json`) utiliza uma população de 100 indivíduos por até 100 gerações, seleção por torneio (`tournament_k=3`), crossover de um ponto e mutação bit flip com taxa inicial de 0.01. Há mecanismos de:
+- Early stopping quando o progresso estagna por várias gerações.
+- Aumento adaptativo da taxa de mutação em caso de estagnação.
+- Elitismo opcional (1 indivíduo) para preservar a melhor solução.
+Limites de recursos nesta configuração: `budget=1200`, `water_limit=1200 m³`, `fert_limit=600 kg`.
+O histórico de convergência (melhor e média de fitness por geração) é persistido em memória e usado para gráficos.
+
 ## Estrutura de Pastas
 ```
 farmtech-ir-alem/
@@ -102,6 +110,17 @@ Cada área agrícola tem os seguintes atributos:
 - `soil_type`: tipo de solo
 - `crop_type`: cultura
 
+### Dados Sintéticos (Detalhes)
+Os dados são inteiramente sintéticos porém gerados com faixas plausíveis para uma análise agrícola simplificada:
+- Produtividade (`prod`) varia entre 10 e 100 (unidades de produção por área) para refletir heterogeneidade de potencial produtivo.
+- Custo (`cost`) entre 1 e 50 para capturar diferenças de investimento requerido (insumos, preparo, logística local).
+- Água (`water`) entre 5 e 30 m³ e fertilizante (`fert`) entre 2 e 15 kg simulam necessidades de insumos com variação moderada.
+- Preço (`price`) entre 0.8 e 2.0 reflete flutuação de mercado entre culturas (ex.: soja, milho, algodão, trigo).
+- Risco (`risk`) entre 0 e 10 agrega fatores como variabilidade climática, pragas e volatilidade operacional.
+- Tipos de solo (`soil_type`): `argiloso`, `arenoso`, `siltoso` — cada um pode implicar em diferenças indiretas de produtividade e custo (não explicitadas no código, mas passíveis de extensão).
+- Culturas (`crop_type`): `soja`, `milho`, `algodao`, `trigo`, permitindo cenários de diversificação. O modelo atual trata todas igualmente em termos de fórmula de fitness, mas o campo existe para futuras regras específicas.
+Todos os atributos são gerados de forma independente; correlações (ex.: solos mais arenosos com maior risco) podem ser adicionadas futuramente para maior realismo.
+
 ## Fitness Realista
 O fitness de cada solução é calculado como:
 ```
@@ -137,9 +156,24 @@ O melhor fitness representa a qualidade da melhor solução encontrada pelo GA, 
 	```
 	- O script mostra todas as análises, rankings, penalidades, gráficos e explicações detalhadas.
 	- Todos os valores de água são apresentados em litros para facilitar a interpretação.
+	- Figuras são salvas automaticamente em `figures/` (ex.: `convergence.png`, `risk_vs_prod.png`).
 
 ## Resultados e Análise
 - Resultados dos experimentos são salvos em `results/`, com nomes únicos para cada execução.
 - Resultados de batch são exportados em CSV para facilitar análise e comparação.
 - O script `analyze_ga.py` apresenta todas as análises relevantes, com explicações e unidades.
+
+## Visualizações
+Ao rodar `python analyze_ga.py` são gerados e salvos automaticamente:
+- `figures/convergence.png`: curva de convergência (melhor e média de fitness por geração).
+- `figures/risk_vs_prod.png`: dispersão risco vs produtividade, destacando áreas selecionadas em vermelho.
+- `figures/best_fitness_box.png`: distribuição do melhor fitness ao longo das gerações.
+
+### Exemplo de Convergência
+![Convergência do GA](figures/convergence.png)
+
+### Risco vs Produtividade
+![Risco vs Produtividade](figures/risk_vs_prod.png)
+
+> Caso as imagens não apareçam após o primeiro run, verifique se a pasta `figures/` foi criada e se o script terminou sem erros.
 

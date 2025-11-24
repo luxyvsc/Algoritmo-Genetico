@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
 
 from src.data_generator import generate_and_save
 from src.utils import load_data
@@ -92,7 +93,9 @@ print(f"Custo: {sum(cost[selected_idx]):.2f} / Limite: {budget}")
 print(f"Água: {sum(water[selected_idx]):.2f} / Limite: {water_limit} m³")
 print(f"Fertilizante: {sum(fert[selected_idx]):.2f} / Limite: {fert_limit} kg")
 
-# 10. Análise gráfica da convergência
+os.makedirs('figures', exist_ok=True)
+
+# 10. Análise gráfica da convergência (salva e mostra)
 plt.figure(figsize=(10,5))
 plt.plot(res['history']['best_fitness'], label='Best Fitness')
 plt.plot(res['history']['mean_fitness'], label='Mean Fitness')
@@ -101,11 +104,26 @@ plt.ylabel('Fitness')
 plt.title('Convergência do Algoritmo Genético')
 plt.legend()
 plt.tight_layout()
+plt.savefig('figures/convergence.png', dpi=140)
 
-# 11. Boxplot dos fitness por geração
+# 11. Scatter risco vs produtividade das áreas selecionadas
+if selected_idx:
+    plt.figure(figsize=(6,5))
+    plt.scatter(df['risk'], df['prod'], alpha=0.35, label='Todas as áreas')
+    plt.scatter(selected_df['risk'], selected_df['prod'], color='red', alpha=0.8, label='Selecionadas')
+    plt.xlabel('Risco (0-10)')
+    plt.ylabel('Produtividade')
+    plt.title('Risco vs Produtividade')
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig('figures/risk_vs_prod.png', dpi=140)
+
+# 12. Boxplot dos best fitness (distribuição)
 plt.figure(figsize=(8,4))
 plt.boxplot(res['history']['best_fitness'], vert=False)
-plt.title('Boxplot do Best Fitness por geração')
+plt.title('Distribuição do Best Fitness (todas as gerações)')
 plt.xlabel('Fitness')
 plt.tight_layout()
+plt.savefig('figures/best_fitness_box.png', dpi=140)
+
 plt.show()
